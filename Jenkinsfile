@@ -48,7 +48,7 @@ pipeline {
         stage('Pull & Run') {
             steps {
                 sh 'docker pull $IMAGE'
-                sh 'docker run -d -p 8000:8000 --name mock-api-final $IMAGE'
+                sh 'docker run -d -p 8000:8000 --rm --name mock-api-final $IMAGE'
             }
         }
     }
