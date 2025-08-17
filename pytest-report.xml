@@ -1,9 +1,1 @@
-<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="1" failures="0" skipped="0" tests="1" time="0.573" timestamp="2025-08-17T18:40:35.943299+03:00" hostname="Eric_Barel"><testcase classname="" name="tests.test_api" time="0.000"><error message="collection failure">ImportError while importing test module 'D:\Development\mock-api\tests\test_api.py'.
-Hint: make sure your test modules/packages have valid Python names.
-Traceback:
-C:\Users\ebare\AppData\Local\Programs\Python\Python313\Lib\importlib\__init__.py:88: in import_module
-    return _bootstrap._gcd_import(name[level:], package, level)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-tests\test_api.py:2: in &lt;module&gt;
-    from app.main import app
-E   ModuleNotFoundError: No module named 'app'</error></testcase></testsuite></testsuites>
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="0" skipped="0" tests="3" time="0.405" timestamp="2025-08-17T18:48:14.442147+03:00" hostname="Eric_Barel"><testcase classname="tests.test_api" name="test_success" time="0.013" /><testcase classname="tests.test_api" name="test_bad_request" time="0.005" /><testcase classname="tests.test_api" name="test_error" time="0.005" /></testsuite></testsuites>
