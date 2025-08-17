@@ -25,12 +25,11 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                sh 'pytest --junitxml=pytest-report.xml -q'
+                sh 'docker run --rm --name mock-api-test $IMAGE pytest --junitxml=pytest-report.xml -q'
             }
             post {
                 always {
                     junit 'pytest-report.xml'
-                    sh 'docker stop mock-api || true'
                 }
             }
         }
@@ -45,10 +44,9 @@ pipeline {
             }
         }
 
-        stage('Pull & Run') {
+        stage('Run Final Container') {
             steps {
-                sh 'docker pull $IMAGE'
-                sh 'docker run -d -p 8000:8000 --rm --name mock-api-final $IMAGE'
+                sh 'docker run -d --rm -p 8000:8000 --name mock-api-final $IMAGE'
             }
         }
     }
