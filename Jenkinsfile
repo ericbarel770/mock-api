@@ -18,6 +18,7 @@ pipeline {
 
         stage('Run Container') {
             steps {
+                sh 'docker rm -f mock-api || true'
                 sh 'docker run -d --rm -p 8000:8000 --name mock-api $IMAGE'
                 sleep 5 // wait for container to start
             }
@@ -25,6 +26,7 @@ pipeline {
 
         stage('Run Tests') {
             steps {
+                sh 'docker rm -f mock-api-test || true'
                 sh 'docker run --rm --name mock-api-test $IMAGE pytest --junitxml=pytest-report.xml -q'
             }
             post {
@@ -46,8 +48,18 @@ pipeline {
 
         stage('Run Final Container') {
             steps {
+                sh 'docker rm -f mock-api-final || true'
                 sh 'docker run -d --rm -p 8020:8020 --name mock-api-final $IMAGE'
             }
+        }
+    }
+
+    post {
+        always {
+            // Ensure containers from this pipeline are removed so reruns do not fail
+            sh 'docker rm -f mock-api || true'
+            sh 'docker rm -f mock-api-test || true'
+            sh 'docker rm -f mock-api-final || true'
         }
     }
 }
