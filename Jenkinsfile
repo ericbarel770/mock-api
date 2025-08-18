@@ -27,7 +27,7 @@ pipeline {
         stage('Run Tests') {
             steps {
                 sh 'docker rm -f mock-api-test || true'
-                sh 'docker run --name mock-api-test $IMAGE pytest --junitxml=pytest-report.xml -q'
+                sh 'docker run --rm --name mock-api-test -v $WORKSPACE:/workspace -w /workspace $IMAGE pytest --junitxml=pytest-report.xml -q'
             }
             post {
                 always {
