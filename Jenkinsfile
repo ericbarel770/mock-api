@@ -46,7 +46,7 @@ pipeline {
 
         stage('Run Final Container') {
             steps {
-                sh 'docker run -d --rm -p 8000:8000 --name mock-api-final $IMAGE'
+                sh 'docker run -d --rm -p 8020:8020 --name mock-api-final $IMAGE'
             }
         }
     }
