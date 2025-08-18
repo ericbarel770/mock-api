@@ -27,6 +27,7 @@ pipeline {
                     if (testStatus == 0) {
                         env.TESTS_PASSED = 'true'
                     } else {
+                        env.TESTS_PASSED = 'false'
                         error 'Tests failed'
                     }
 
