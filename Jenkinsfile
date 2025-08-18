@@ -16,14 +16,6 @@ pipeline {
             }
         }
 
-        stage('Run Container') {
-            steps {
-                sh(script: 'docker rm -f mock-api', returnStatus: true)
-                sh 'docker run -d --rm -p 8000:8000 --name mock-api $IMAGE'
-                sleep 5 // wait for container to start
-            }
-        }
-
         stage('Run Tests') {
             steps {
                 script {
