@@ -32,13 +32,12 @@ pipeline {
                         //env.TESTS_PASSED = 'false'
                         //error 'Tests failed'
                     //}
-
-                    echo "Test status: ${testStatus}"
-                    echo "TESTS_PASSED: ${env.TESTS_PASSED}"
                 }
             }
             post {
                 always {
+                    echo "Test status: ${testStatus}"
+                    echo "TESTS_PASSED: ${env.TESTS_PASSED}"
                     sh(script: 'docker rm -f mock-api-test', returnStatus: true)
                 }
             }
