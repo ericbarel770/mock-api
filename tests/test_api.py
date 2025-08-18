@@ -10,7 +10,7 @@ def test_success():
 
 def test_bad_request():
     r = client.get("/bad-request")
-    assert r.status_code == 4000
+    assert r.status_code == 400
 
 def test_error():
     r = client.get("/error")
