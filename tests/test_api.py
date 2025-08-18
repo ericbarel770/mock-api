@@ -9,7 +9,7 @@ client = TestClient(app)
 # GET Tests
 # -------------------
 def test_get_valid_item():
-    response = client.get("/items/1")
+    response = client.get("/items?item_id=1")
     assert response.status_code == 200
     assert response.json() == {"id": 1, "name": "Sample Item"}
 

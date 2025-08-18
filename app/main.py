@@ -12,7 +12,7 @@ class Item(BaseModel):
 # -------------------
 # GET Examples
 # -------------------
-@app.get("/items/{item_id}")
+@app.get("/items/")
 def get_item(item_id: int):
     if item_id == 1:
         return {"id": 1, "name": "Sample Item"}
