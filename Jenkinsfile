@@ -22,7 +22,6 @@ pipeline {
                     sh(script: 'docker rm -f mock-api-test', returnStatus: true)
                     def testStatus = sh(script: "docker run --name mock-api-test -w /app $IMAGE pytest -q --junitxml=/tmp/pytest-report.xml tests", returnStatus: true)
                     sh(script: 'docker cp mock-api-test:/tmp/pytest-report.xml ./pytest-report.xml', returnStatus: true)
-                    sh(script: 'docker rm -f mock-api-test', returnStatus: true)
                     junit 'pytest-report.xml'
                     if (testStatus != 0) {
                         error 'Tests failed'
@@ -32,7 +31,7 @@ pipeline {
         }
 
         stage('Push to Docker Hub only if tests pass') {
-            when { expression { currentBuild.resultIsBetterOrEqualTo('SUCCESS') } }
+            when { expression { stage('Run Tests') .resultIsBetterOrEqualTo('SUCCESS') } }
             steps {
                 withCredentials([usernamePassword(credentialsId: 'docker-hub', usernameVariable: 'DH_USER', passwordVariable: 'DH_PASS')]) {
                     sh 'echo $DH_PASS | docker login -u $DH_USER --password-stdin'
