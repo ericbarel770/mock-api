@@ -18,7 +18,7 @@ pipeline {
 
         stage('Run Container') {
             steps {
-                sh 'docker rm -f mock-api || true'
+                sh(script: 'docker rm -f mock-api', returnStatus: true)
                 sh 'docker run -d --rm -p 8000:8000 --name mock-api $IMAGE'
                 sleep 5 // wait for container to start
             }
@@ -26,7 +26,7 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                sh 'docker rm -f mock-api-test || true'
+                sh(script: 'docker rm -f mock-api-test', returnStatus: true)
                 sh 'docker run --rm --name mock-api-test -v $WORKSPACE:/workspace -w /workspace $IMAGE pytest -q --junitxml=pytest-report.xml tests'
             }
             post {
@@ -48,8 +48,8 @@ pipeline {
 
         stage('Run Final Container') {
             steps {
-                sh 'docker rm -f mock-api-final || true'
-                sh 'docker run -d -p 8020:8020 --name mock-api-final $IMAGE'
+                sh(script: 'docker rm -f mock-api-final', returnStatus: true)
+                sh 'docker run -d -p 8020:8000 --name mock-api-final $IMAGE'
             }
         }
     }
