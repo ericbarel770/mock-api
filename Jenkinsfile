@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         IMAGE = "docker.io/ebarel/mock-api:${env.BUILD_NUMBER}"
-        env.TESTS_PASSED = 'false'
+        TESTS_PASSED = 'false'
     }
 
     stages {
@@ -24,9 +24,9 @@ pipeline {
                     sh(script: 'docker cp mock-api-test:/tmp/pytest-report.xml ./pytest-report.xml', returnStatus: true)
                     junit 'pytest-report.xml'
                     
-                    env.TESTS_PASSED = testStatus == 0 ? 'true' : 'false'
+                    def TESTS_PASSED = testStatus == 0 ? 'true' : 'false'
 
-                    if (env.TESTS_PASSED == 'false') {
+                    if (TESTS_PASSED == 'false') {
                         error 'Tests failed'
                     }
                 }
@@ -39,7 +39,7 @@ pipeline {
         }
 
         stage('Push to Docker Hub only if tests pass') {
-            when { expression { env.TESTS_PASSED == 'true' } }
+            when { expression { TESTS_PASSED == 'true' } }
             steps {
                 withCredentials([usernamePassword(credentialsId: 'docker-hub', usernameVariable: 'DH_USER', passwordVariable: 'DH_PASS')]) {
                     sh 'echo $DH_PASS | docker login -u $DH_USER --password-stdin'
