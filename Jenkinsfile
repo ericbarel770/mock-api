@@ -31,7 +31,7 @@ pipeline {
         }
 
         stage('Push to Docker Hub only if tests pass') {
-            when { expression { stage('Run Tests') .resultIsBetterOrEqualTo('SUCCESS') } }
+            when { expression { stage('Run Tests').resultIsBetterOrEqualTo('SUCCESS') } }
             steps {
                 withCredentials([usernamePassword(credentialsId: 'docker-hub', usernameVariable: 'DH_USER', passwordVariable: 'DH_PASS')]) {
                     sh 'echo $DH_PASS | docker login -u $DH_USER --password-stdin'
