@@ -24,9 +24,12 @@ pipeline {
                     sh(script: 'docker cp mock-api-test:/tmp/pytest-report.xml ./pytest-report.xml', returnStatus: true)
                     junit 'pytest-report.xml'
                     
-                    def TESTS_PASSED = testStatus == 0 ? 'true' : 'false'
+                    env.TESTS_PASSED = testStatus == 0 ? 'true' : 'false'
 
-                    if (TESTS_PASSED == 'false') {
+                    echo "Test status: ${testStatus}"
+                    echo "TESTS_PASSED environment variable: ${env.TESTS_PASSED}"
+
+                    if (env.TESTS_PASSED == 'false') {
                         error 'Tests failed'
                     }
                 }
@@ -39,8 +42,12 @@ pipeline {
         }
 
         stage('Push to Docker Hub only if tests pass') {
-            when { expression { TESTS_PASSED == 'true' } }
+            when { expression { env.TESTS_PASSED == 'true' } }
             steps {
+                script {
+                    echo "In Push stage - TESTS_PASSED value: ${env.TESTS_PASSED}"
+                    echo "Condition evaluation: ${env.TESTS_PASSED == 'true'}"
+                }
                 withCredentials([usernamePassword(credentialsId: 'docker-hub', usernameVariable: 'DH_USER', passwordVariable: 'DH_PASS')]) {
                     sh 'echo $DH_PASS | docker login -u $DH_USER --password-stdin'
                     sh 'docker push $IMAGE'
