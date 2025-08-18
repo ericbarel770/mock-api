@@ -5,7 +5,7 @@ client = TestClient(app)
 
 def test_success():
     r = client.get("/success")
-    assert r.status_code == 200
+    assert r.status_code == 2000
     assert r.json()["status"] == "ok"
 
 def test_bad_request():
