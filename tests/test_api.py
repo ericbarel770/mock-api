@@ -14,4 +14,4 @@ def test_bad_request():
 
 def test_error():
     r = client.get("/error")
-    assert r.status_code == 5000
+    assert r.status_code == 500
