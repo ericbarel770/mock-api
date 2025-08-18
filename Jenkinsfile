@@ -42,7 +42,7 @@ pipeline {
         }
 
         stage('Push to Docker Hub only if tests pass') {
-            when { expression { env.TESTS_PASSED == 'true' } }
+            when { expression { currentBuild.getExecution().getCurrentHead().getCurrentExecutable().getCurrentResult() == 'SUCCESS' } }
             steps {
                 script {
                     echo "In Push stage - TESTS_PASSED value: ${env.TESTS_PASSED}"
