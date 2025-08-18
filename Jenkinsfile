@@ -23,14 +23,14 @@ pipeline {
                     def testStatus = sh(script: "docker run --name mock-api-test -w /app $IMAGE pytest -q --junitxml=/tmp/pytest-report.xml tests", returnStatus: true)
                     sh(script: 'docker cp mock-api-test:/tmp/pytest-report.xml ./pytest-report.xml', returnStatus: true)
                     junit 'pytest-report.xml'
-                    echo "Test status: ${testStatus}"
-
+                    
                     if (testStatus == 0) {
                         env.TESTS_PASSED = 'true'
                     } else {
                         error 'Tests failed'
                     }
-                    
+
+                    echo "Test status: ${testStatus}"
                     echo "TESTS_PASSED: ${env.TESTS_PASSED}"
                 }
             }
