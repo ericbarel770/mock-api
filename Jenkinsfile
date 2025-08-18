@@ -36,7 +36,7 @@ pipeline {
             }
             post {
                 always {
-                    echo "Test status: ${testStatus}"
+                    //echo "Test status: ${testStatus}"
                     echo "TESTS_PASSED: ${env.TESTS_PASSED}"
                     sh(script: 'docker rm -f mock-api-test', returnStatus: true)
                 }
