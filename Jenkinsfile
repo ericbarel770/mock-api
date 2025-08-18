@@ -27,7 +27,7 @@ pipeline {
         stage('Run Tests') {
             steps {
                 sh 'docker rm -f mock-api-test || true'
-                sh 'docker run --rm --name mock-api-test $IMAGE pytest --junitxml=pytest-report.xml -q'
+                sh 'docker run --name mock-api-test $IMAGE pytest --junitxml=pytest-report.xml -q'
             }
             post {
                 always {
@@ -49,7 +49,7 @@ pipeline {
         stage('Run Final Container') {
             steps {
                 sh 'docker rm -f mock-api-final || true'
-                sh 'docker run -d --rm -p 8020:8020 --name mock-api-final $IMAGE'
+                sh 'docker run -d -p 8020:8020 --name mock-api-final $IMAGE'
             }
         }
     }
