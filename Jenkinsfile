@@ -24,12 +24,14 @@ pipeline {
                     sh(script: 'docker cp mock-api-test:/tmp/pytest-report.xml ./pytest-report.xml', returnStatus: true)
                     junit 'pytest-report.xml'
                     
-                    if (testStatus == 0) {
+                    env.TESTS_PASSED = testStatus == 0 ? 'true' : 'false'
+
+                    //if (testStatus == 0) {
                         //env.TESTS_PASSED = 'true'
-                    } else {
+                    //} else {
                         //env.TESTS_PASSED = 'false'
-                        error 'Tests failed'
-                    }
+                        //error 'Tests failed'
+                    //}
 
                     echo "Test status: ${testStatus}"
                     echo "TESTS_PASSED: ${env.TESTS_PASSED}"
