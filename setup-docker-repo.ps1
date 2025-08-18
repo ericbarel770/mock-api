@@ -48,8 +48,8 @@ Write-Host "   Replace 'your-username' in the IMAGE variable with your actual Do
 Write-Host ""
 
 Write-Host "4. **Test the push manually:**" -ForegroundColor Yellow
-Write-Host "   docker build -t your-username/mock-api:test ." -ForegroundColor White
-Write-Host "   docker push your-username/mock-api:test" -ForegroundColor White
+Write-Host "   docker build -t ebarel/mock-api:test ." -ForegroundColor White
+Write-Host "   docker push erbarel/mock-api:test" -ForegroundColor White
 Write-Host ""
 
 Write-Host "5. **Common issues and solutions:**" -ForegroundColor Yellow
@@ -59,7 +59,7 @@ Write-Host "   - Wrong namespace: Use your own username, not 'bmc' unless you ha
 Write-Host ""
 
 Write-Host "6. **For organization repositories:**" -ForegroundColor Yellow
-Write-Host "   - Use: organization-name/mock-api" -ForegroundColor White
+Write-Host "   - Use: ebarel/mock-api" -ForegroundColor White
 Write-Host "   - Make sure you have push permissions to the organization" -ForegroundColor White
 Write-Host ""
 
