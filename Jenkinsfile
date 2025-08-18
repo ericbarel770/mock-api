@@ -38,7 +38,7 @@ pipeline {
                     sh 'echo $DH_PASS | docker login -u $DH_USER --password-stdin'
                     sh 'docker push $IMAGE'
                     sh(script: 'docker rm -f mock-api-final', returnStatus: true)
-                    sh 'docker run -d -p 8020:8000 --name mock-api-final $IMAGE'
+                    sh 'docker run -d -p 8000:8000 --name mock-api-final $IMAGE'
                 }
             }
         }
