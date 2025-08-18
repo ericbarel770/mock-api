@@ -26,18 +26,13 @@ pipeline {
                     
                     TESTS_PASSED = testStatus == 0 ? 'true' : 'false'
 
-                    //if (testStatus == 0) {
-                        //env.TESTS_PASSED = 'true'
-                    //} else {
-                        //env.TESTS_PASSED = 'false'
-                        //error 'Tests failed'
-                    //}
+                    if (TESTS_PASSED == 'false') {
+                        error 'Tests failed'
+                    }
                 }
             }
             post {
                 always {
-                    //echo "Test status: ${testStatus}"
-                    echo "TESTS_PASSED: ${TESTS_PASSED}"
                     sh(script: 'docker rm -f mock-api-test', returnStatus: true)
                 }
             }
