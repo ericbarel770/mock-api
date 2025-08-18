@@ -53,13 +53,4 @@ pipeline {
             }
         }
     }
-
-    post {
-        always {
-            // Ensure containers from this pipeline are removed so reruns do not fail
-            sh 'docker rm -f mock-api || true'
-            sh 'docker rm -f mock-api-test || true'
-            sh 'docker rm -f mock-api-final || true'
-        }
-    }
 }
