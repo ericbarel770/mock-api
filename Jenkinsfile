@@ -25,9 +25,9 @@ pipeline {
                     junit 'pytest-report.xml'
                     
                     if (testStatus == 0) {
-                        env.TESTS_PASSED = 'true'
+                        //env.TESTS_PASSED = 'true'
                     } else {
-                        env.TESTS_PASSED = 'false'
+                        //env.TESTS_PASSED = 'false'
                         error 'Tests failed'
                     }
 
