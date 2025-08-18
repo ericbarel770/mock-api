@@ -26,14 +26,15 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                sh(script: 'docker rm -f mock-api-test', returnStatus: true)
-                sh 'docker run --name mock-api-test -w /app $IMAGE pytest -q --junitxml=/tmp/pytest-report.xml tests'
-                sh 'docker cp mock-api-test:/tmp/pytest-report.xml ./pytest-report.xml'
-                sh(script: 'docker rm -f mock-api-test', returnStatus: true)
-            }
-            post {
-                always {
+                script {
+                    sh(script: 'docker rm -f mock-api-test', returnStatus: true)
+                    def testStatus = sh(script: "docker run --name mock-api-test -w /app $IMAGE pytest -q --junitxml=/tmp/pytest-report.xml tests", returnStatus: true)
+                    sh(script: 'docker cp mock-api-test:/tmp/pytest-report.xml ./pytest-report.xml', returnStatus: true)
+                    sh(script: 'docker rm -f mock-api-test', returnStatus: true)
                     junit 'pytest-report.xml'
+                    if (testStatus != 0) {
+                        error 'Tests failed'
+                    }
                 }
             }
         }
