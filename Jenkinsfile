@@ -36,7 +36,7 @@ pipeline {
         }
 
         stage('Push to Docker Hub only if tests pass') {
-            when { expression { currentBuild.getExecution().getCurrentHead().getCurrentExecutable().getCurrentResult() == 'SUCCESS' } }
+            when { expression { currentBuild.resultIsBetterOrEqualTo('SUCCESS') } }
             steps {
                     withCredentials([usernamePassword(credentialsId: 'docker-hub', usernameVariable: 'DH_USER', passwordVariable: 'DH_PASS')]) {
                         sh 'echo $DH_PASS | docker login -u $DH_USER --password-stdin'
