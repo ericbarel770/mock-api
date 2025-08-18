@@ -39,20 +39,15 @@ pipeline {
             }
         }
 
-        stage('Push to Docker Hub') {
+        stage('Push to Docker Hub only if tests pass') {
             when { expression { currentBuild.resultIsBetterOrEqualTo('SUCCESS') } }
             steps {
                 withCredentials([usernamePassword(credentialsId: 'docker-hub', usernameVariable: 'DH_USER', passwordVariable: 'DH_PASS')]) {
                     sh 'echo $DH_PASS | docker login -u $DH_USER --password-stdin'
                     sh 'docker push $IMAGE'
+                    sh(script: 'docker rm -f mock-api-final', returnStatus: true)
+                    sh 'docker run -d -p 8020:8000 --name mock-api-final $IMAGE'
                 }
-            }
-        }
-
-        stage('Run Final Container') {
-            steps {
-                sh(script: 'docker rm -f mock-api-final', returnStatus: true)
-                sh 'docker run -d -p 8020:8000 --name mock-api-final $IMAGE'
             }
         }
     }
