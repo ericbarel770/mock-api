@@ -72,18 +72,18 @@ def test_put_server_error():
 # DELETE Tests
 # -------------------
 def test_delete_valid_item():
-    response = client.delete("/items/1")
+    response = client.delete("/items/?item_id=1")
     assert response.status_code == 200
     assert response.json()["message"] == "Item deleted successfully"
 
 
 def test_delete_invalid_id():
-    response = client.delete("/items/0")
+    response = client.delete("/items/?item_id=0")
     assert response.status_code == 400
     assert response.json()["detail"] == "Invalid item ID"
 
 
 def test_delete_not_found():
-    response = client.delete("/items/2")
+    response = client.delete("/items/?item_id=2")
     assert response.status_code == 404
     assert response.json()["detail"] == "Item not found"

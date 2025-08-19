@@ -49,7 +49,7 @@ def update_item(item_id: int, item: Item):
 # -------------------
 # DELETE Example
 # -------------------
-@app.delete("/items/{item_id}")
+@app.delete("/items/")
 def delete_item(item_id: int):
     if item_id == 1:
         return {"message": "Item deleted successfully"}
