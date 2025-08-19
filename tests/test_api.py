@@ -14,16 +14,16 @@ def test_get_valid_item():
     assert response.json() == {"id": 1, "name": "Sample Item"}
 
 
-#def test_get_invalid_item_id():
- #   response = client.get("/items/0")
- #   assert response.status_code == 400
- #   assert response.json()["detail"] == "Invalid item ID"
+def test_get_invalid_item_id():
+    response = client.get("/items/?item_id=0")
+    assert response.status_code == 400
+    assert response.json()["detail"] == "Invalid item ID"
 
 
-#def test_get_not_found_item():
- #   response = client.get("/items/2")
- #   assert response.status_code == 404
- #   assert response.json()["detail"] == "Item not found"
+def test_get_not_found_item():
+    response = client.get("/items/?item_id=2")
+    assert response.status_code == 404
+    assert response.json()["detail"] == "Item not found"
 
 
 # -------------------
