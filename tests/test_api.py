@@ -51,19 +51,19 @@ def test_post_db_error():
 # PUT Tests
 # -------------------
 def test_put_valid_item():
-    response = client.put("/items/10", json={"id": 10, "name": "Updated"})
+    response = client.put("/items/?item_id=10", json={"id": 10, "name": "Updated"})
     assert response.status_code == 200
     assert response.json()["message"] == "Item updated successfully"
 
 
 def test_put_id_mismatch():
-    response = client.put("/items/10", json={"id": 11, "name": "Mismatch"})
+    response = client.put("/items/?item_id=10", json={"id": 11, "name": "Mismatch"})
     assert response.status_code == 400
     assert response.json()["detail"] == "Item ID mismatch"
 
 
 def test_put_server_error():
-    response = client.put("/items/500", json={"id": 500, "name": "Crash"})
+    response = client.put("/items/?item_id=500", json={"id": 500, "name": "Crash"})
     assert response.status_code == 500
     assert response.json()["detail"] == "Unexpected server error"
 
